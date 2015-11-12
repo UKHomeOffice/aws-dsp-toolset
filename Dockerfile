@@ -12,6 +12,7 @@ RUN curl -s -L https://github.com/UKHomeOffice/s3secrets/releases/download/0.1.2
 
 RUN curl -s -L https://github.com/coreos/fleet/releases/download/v0.11.5/fleet-v0.11.5-linux-amd64.tar.gz | tar -xzf - -C /usr/bin --strip-components=1 '*/fleetctl'
 RUN curl -s -L https://storage.googleapis.com/kubernetes-release/release/v1.1.1/bin/linux/amd64/kubectl -o /usr/bin/kubectl && chmod +x /usr/bin/kubectl
+RUN curl -s -L https://s3-eu-west-1.amazonaws.com/hod-dsp-tools-eu-west-1/coreos-cloudinit-1.7.1-linux-amd64 -o /usr/bin/coreos-cloudinit && chmod +x /usr/bin/coreos-cloudinit
 
 RUN /usr/bin/aws --version
 RUN /usr/bin/docker --version
@@ -19,5 +20,6 @@ RUN /usr/bin/cfssl version
 RUN /usr/bin/stacks --version
 RUN /usr/bin/kubectl version -c
 RUN /usr/bin/fleetctl version
+RUN /usr/bin/coreos-cloudinit -version
 RUN /usr/bin/s3secrets --help > /dev/null
 
