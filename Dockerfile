@@ -8,9 +8,16 @@ RUN pip3 install awscli
 RUN curl -s https://pkg.cfssl.org/R1.1/cfssl_linux-amd64 -o /usr/bin/cfssl && chmod +x /usr/bin/cfssl
 RUN curl -s https://pkg.cfssl.org/R1.1/cfssljson_linux-amd64 -o /usr/bin/cfssljson && chmod +x /usr/bin/cfssljson
 RUN curl -s -L https://github.com/cfstacks/stacks/releases/download/v0.2.0/stacks-0.2.0-linux-amd64 -o /usr/bin/stacks && chmod +x /usr/bin/stacks
+RUN curl -s -L https://github.com/UKHomeOffice/s3secrets/releases/download/0.1.2/s3secrets_0.1.2_linux_x86_64 -o /usr/bin/s3secrets && chmod +x /usr/bin/s3secrets
+
+RUN curl -s -L https://github.com/coreos/fleet/releases/download/v0.11.5/fleet-v0.11.5-linux-amd64.tar.gz | tar -xzf - -C /usr/bin --strip-components=1 '*/fleetctl'
+RUN curl -s -L https://storage.googleapis.com/kubernetes-release/release/v1.1.1/bin/linux/amd64/kubectl -o /usr/bin/kubectl && chmod +x /usr/bin/kubectl
 
 RUN /usr/bin/aws --version
 RUN /usr/bin/docker --version
 RUN /usr/bin/cfssl version
 RUN /usr/bin/stacks --version
+RUN /usr/bin/kubectl version -c
+RUN /usr/bin/fleetctl version
+RUN /usr/bin/s3secrets --help > /dev/null
 
