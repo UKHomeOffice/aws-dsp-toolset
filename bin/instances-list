@@ -1,0 +1,14 @@
+#!/usr/bin/bash
+
+# List instances with some useful details. This scripts takes top level awscli
+# arguments, like --profile or --region.
+#
+# Note: instances with Role and Env tags only be listed
+#
+aws ${@} ec2 describe-instances | jq -r '.Reservations[].Instances[]|.PublicIpAddress +
+  "|" + .PrivateIpAddress +
+  "|" + (.Tags[]|select(.Key == "Name")|.Value) +
+  "|" + .InstanceId +
+  "|" + .State.Name +
+  "|Env=" + (.Tags[]|select(.Key == "Env")|.Value) +
+  "|Role=" + (.Tags[]|select(.Key == "Role")|.Value)' | column -t -s '|' | sort -k3
