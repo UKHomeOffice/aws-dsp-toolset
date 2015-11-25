@@ -1,7 +1,7 @@
 FROM fedora:23
 
 RUN dnf upgrade -y -q && dnf clean all
-RUN dnf install -y -q git jq docker which tar && dnf clean all
+RUN dnf install -y -q git jq docker which tar openssh-clients && dnf clean all
 
 RUN pip3 install awscli
 
