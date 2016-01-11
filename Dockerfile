@@ -13,7 +13,7 @@ RUN curl -s -L https://github.com/UKHomeOffice/s3secrets/releases/download/v0.1.
 RUN curl -s -L https://github.com/coreos/fleet/releases/download/v0.11.5/fleet-v0.11.5-linux-amd64.tar.gz | tar -xzf - -C /usr/bin --strip-components=1 '*/fleetctl'
 RUN curl -s -L https://storage.googleapis.com/kubernetes-release/release/v1.1.3/bin/linux/amd64/kubectl -o /usr/bin/kubectl && chmod +x /usr/bin/kubectl
 RUN curl -s -L https://s3-eu-west-1.amazonaws.com/hod-dsp-tools-eu-west-1/coreos-cloudinit-1.7.1-linux-amd64 -o /usr/bin/coreos-cloudinit && chmod +x /usr/bin/coreos-cloudinit
-RUN export KB8OR_VER=0.6.4 && \
+RUN export KB8OR_VER=0.6.5 && \
     curl -s -L https://github.com/UKHomeOffice/kb8or/archive/v${KB8OR_VER}.tar.gz | tar -xzf - -C /var/lib && \
     cd /var/lib/kb8or-${KB8OR_VER}/ && \
     gem install bundler && \
