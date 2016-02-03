@@ -7,7 +7,7 @@ RUN pip3 install awscli testinfra
 
 RUN curl -s https://pkg.cfssl.org/R1.1/cfssl_linux-amd64 -o /usr/bin/cfssl && chmod +x /usr/bin/cfssl
 RUN curl -s https://pkg.cfssl.org/R1.1/cfssljson_linux-amd64 -o /usr/bin/cfssljson && chmod +x /usr/bin/cfssljson
-RUN curl -s -L https://github.com/cfstacks/stacks/releases/download/v0.3.1-rc1/stacks-0.3.1-rc1-py34-linux-x86_64.pex -o /usr/bin/stacks && chmod +x /usr/bin/stacks
+RUN curl -s -L https://github.com/cfstacks/stacks/releases/download/v0.3.1/stacks-0.3.1-py34-linux-x86_64.pex -o /usr/bin/stacks && chmod +x /usr/bin/stacks
 RUN curl -s -L https://github.com/UKHomeOffice/s3secrets/releases/download/v0.1.3/s3secrets_v0.1.3_linux_x86_64 -o /usr/bin/s3secrets && chmod +x /usr/bin/s3secrets
 
 RUN curl -s -L https://github.com/coreos/fleet/releases/download/v0.11.5/fleet-v0.11.5-linux-amd64.tar.gz | tar -xzf - -C /usr/bin --strip-components=1 '*/fleetctl'
