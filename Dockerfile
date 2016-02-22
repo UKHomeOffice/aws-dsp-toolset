@@ -22,8 +22,12 @@ RUN export KB8OR_VER=0.6.9 && \
 RUN curl -s -L https://releases.hashicorp.com/vault/0.5.0/vault_0.5.0_linux_amd64.zip -o /tmp/vault_0.5.0_linux_amd64.zip && \
     unzip /tmp/vault_0.5.0_linux_amd64.zip && \
     mv vault /usr/bin/vault && \
-    chmod +x /usr/bin/vault && \    
+    chmod +x /usr/bin/vault && \
     rm -f /tmp/vault_0.5.0_linux_amd64.zip
+
+RUN curl -s -L https://github.com/UKHomeOffice/vaultctl/releases/download/v0.0.3/vaultctl_v0.0.3_linux_x86_64.gz -o /usr/bin/vaultctl.gz && \
+    gunzip /usr/bin/vaultctl.gz && \
+    chmod +x /usr/bin/vaultctl
 
 COPY bin/* /usr/local/bin/
 
@@ -37,3 +41,4 @@ RUN /usr/bin/coreos-cloudinit -version
 RUN /usr/bin/s3secrets --help > /dev/null
 RUN /usr/bin/kb8or --version > /dev/null
 RUN /usr/bin/vault version
+RUN /usr/bin/vaultctl --version
