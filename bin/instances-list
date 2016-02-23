@@ -5,7 +5,7 @@
 #
 # Note: instances with Role and Env tags only be listed
 #
-aws ${@} ec2 describe-instances | jq -r '.Reservations[].Instances[]|.PublicIpAddress +
+aws ${@} ec2 describe-instances | jq -r '.Reservations[]?.Instances[]?|.PublicIpAddress +
   "|" + .PrivateIpAddress +
   "|" + (.Tags[]?|select(.Key == "Name")|.Value) +
   "|" + .InstanceId +
