@@ -105,8 +105,10 @@ if [[ -n ${remote_peering_id} ]]; then
   # Get local vpc_peering_id's:
   vpc_peering_id=$(aws ec2 describe-vpc-peering-connections | \
     jq -r ".VpcPeeringConnections[]|
-           select(.RequesterVpcInfo.VpcId == \"$local_vpc_id\" and .Status.Code == \"active\")
-           | .VpcPeeringConnectionId")
+           select(.RequesterVpcInfo.VpcId == \"$local_vpc_id\" and .Status.Code == \"active\") |
+           select(.AccepterVpcInfo.CidrBlock == \"${remote_cidr}\") |
+           .VpcPeeringConnectionId")
+  echo "--- Peering ID:$vpc_peering_id"
 else
   echo "--- About to peer ${local_vpc_id} with ${remote_profile} (${remote_vpc_id})..."
   vpc_peering_id=$(aws ec2 create-vpc-peering-connection \
@@ -135,10 +137,12 @@ else
 fi
 # Create the routing entries in REMOTE VPC:
 remote_route_table_id=$(get_route_table_id ${remote_vpc_id} ${remote_profile} "${remote_route_table_name}")
+echo "-- Remote route table id:${remote_route_table_id}"
 if [[ -n $(get_route_entry ${remote_vpc_id} ${remote_peering_id} ${remote_profile}) ]]; then
   echo "Remote Route exists already"
 else
   echo "--- Creating remote route in ${remote_vpc_id} to ${vpc_cidr}..."
+
   aws ec2 \
     --profile ${remote_profile} \
     create-route \
