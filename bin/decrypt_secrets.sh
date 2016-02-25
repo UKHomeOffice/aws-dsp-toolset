@@ -13,6 +13,6 @@ if [[ -f ${secrets_file_enc} ]]; then
   DECODE_OUT=$(mktemp) || { echo "Failed to create tempfile ${DECODE_OUT}"; exit 1; }
   cat "${secrets_file_enc}" | base64 --decode > "${DECODE_OUT}"
   aws kms decrypt --ciphertext-blob "fileb://${DECODE_OUT}" --query Plaintext \
-    --output text | base64 --decode > "${secrets_file}" && \
-  rm "${secrets_file_enc}"
+    --output text | base64 --decode > "${secrets_file}" || \
+    { echo "Failed to decrypt the secrets file"; exit 1; }
 fi
