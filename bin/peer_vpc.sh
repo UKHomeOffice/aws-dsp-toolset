@@ -96,7 +96,9 @@ peering_account_id=$(aws --profile ${remote_profile} iam list-users | \
 
 remote_peering_id=$(aws ec2 --profile ${remote_profile} describe-vpc-peering-connections | \
   jq -r ".VpcPeeringConnections[] |
-  select(.RequesterVpcInfo.VpcId == \"$local_vpc_id\" and .Status.Code == \"active\") | .VpcPeeringConnectionId")
+         select(.Status.Code == \"active\") | \
+         select( .AccepterVpcInfo.CidrBlock == \"${vpc_cidr}\" or .RequesterVpcInfo.CidrBlock == \"${vpc_cidr}\" ) | \
+         .VpcPeeringConnectionId" )
 
 echo "--- Updating peer ${local_vpc_id} with ${remote_profile} (${remote_vpc_id})..."
 if [[ -n ${remote_peering_id} ]]; then
@@ -105,8 +107,9 @@ if [[ -n ${remote_peering_id} ]]; then
   # Get local vpc_peering_id's:
   vpc_peering_id=$(aws ec2 describe-vpc-peering-connections | \
     jq -r ".VpcPeeringConnections[]|
-           select(.RequesterVpcInfo.VpcId == \"$local_vpc_id\" and .Status.Code == \"active\") |
-           select(.AccepterVpcInfo.CidrBlock == \"${remote_cidr}\") |
+           select(.Status.Code == \"active\") |
+           select(.AccepterVpcInfo.CidrBlock == \"${remote_cidr}\" or .RequesterVpcInfo.CidrBlock == \"${remote_cidr}\" ) |
+           select(.AccepterVpcInfo.CidrBlock == \"${vpc_cidr}\" or .RequesterVpcInfo.CidrBlock == \"${vpc_cidr}\" ) |
            .VpcPeeringConnectionId")
   echo "--- Peering ID:$vpc_peering_id"
 else
