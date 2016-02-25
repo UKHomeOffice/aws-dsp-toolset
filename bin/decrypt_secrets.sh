@@ -4,7 +4,7 @@ set -o errexit
 set -o pipefail
 
 # Get the master key id
-kms_master_key_id=$(cd stacks ; stacks config -e ${STACKS_ENV} kms_master_key_id)
+kms_master_key_id=$(cd stacks ; stacks config kms_master_key_id)
 
 # Check if there is a secrets yaml and decode and make it available to stacks
 secrets_file_enc="stacks/config.d/secrets.yaml.enc"
