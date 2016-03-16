@@ -25,7 +25,7 @@ RUN curl -s -L https://releases.hashicorp.com/vault/0.5.0/vault_0.5.0_linux_amd6
     chmod +x /usr/bin/vault && \
     rm -f /tmp/vault_0.5.0_linux_amd64.zip
 
-RUN curl -s -L https://github.com/UKHomeOffice/vaultctl/releases/download/v0.0.5/vaultctl_v0.0.5_linux_x86_64.gz -o /usr/bin/vaultctl.gz && \
+RUN curl -s -L https://github.com/UKHomeOffice/vaultctl/releases/download/v0.0.6/vaultctl_v0.0.6_linux_x86_64.gz -o /usr/bin/vaultctl.gz && \
     gunzip /usr/bin/vaultctl.gz && \
     chmod +x /usr/bin/vaultctl
 
