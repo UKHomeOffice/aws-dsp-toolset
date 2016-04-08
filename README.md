@@ -55,4 +55,4 @@ dev:
 
 {{some_secret}} now becomes a variable inside your templates for the development environment
 ```
-
+This is done when run.sh is initiated, decrypt_secrets will be executed before it runs stacks
