@@ -34,7 +34,7 @@ This is used to peer VPC's together, (VPC Peering)
 
 This is used to encrypt secrets in a specific path and based on environment. If there are any files:
 ```
-stacks/config.d/secrets_${stacks_env}
+stacks/config.d/secrets_${stacks_env}.yaml
 ```
 
 It will use the kms key to encrypt those files leaving them as base64 encoded files e.g.
