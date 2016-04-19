@@ -1,7 +1,7 @@
 FROM fedora:23
 
 RUN dnf upgrade -y -q && dnf clean all
-RUN dnf install -y -q procps-ng openssl git jq docker which tar openssh-clients ruby unzip && dnf clean all
+RUN dnf install -y -q procps-ng openssl git jq which tar openssh-clients ruby unzip && dnf clean all
 
 RUN pip3 install awscli testinfra
 
@@ -32,7 +32,6 @@ RUN curl -s -L https://github.com/UKHomeOffice/vaultctl/releases/download/v0.0.6
 COPY bin/* /usr/local/bin/
 
 RUN /usr/bin/aws --version
-RUN /usr/bin/docker --version
 RUN /usr/bin/cfssl version
 RUN /usr/bin/stacks --version
 RUN /usr/bin/kubectl version -c
