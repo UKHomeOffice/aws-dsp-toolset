@@ -11,7 +11,7 @@ RUN pip3 install git+https://github.com/cfstacks/stacks.git@v0.3.3
 RUN curl -s -L https://github.com/UKHomeOffice/s3secrets/releases/download/v0.1.3/s3secrets_v0.1.3_linux_x86_64 -o /usr/bin/s3secrets && chmod +x /usr/bin/s3secrets
 
 RUN curl -s -L https://github.com/coreos/fleet/releases/download/v0.11.7/fleet-v0.11.7-linux-amd64.tar.gz | tar -xzf - -C /usr/bin --strip-components=1 '*/fleetctl'
-RUN curl -s -L https://storage.googleapis.com/kubernetes-release/release/v1.2.4/bin/linux/amd64/kubectl -o /usr/bin/kubectl && chmod +x /usr/bin/kubectl
+RUN curl -s -L https://storage.googleapis.com/kubernetes-release/release/v1.3.3/bin/linux/amd64/kubectl -o /usr/bin/kubectl && chmod +x /usr/bin/kubectl
 RUN curl -s -L https://s3-eu-west-1.amazonaws.com/hod-dsp-tools/coreos-cloudinit-1.10.0-linux-amd64 -o /usr/bin/coreos-cloudinit && chmod +x /usr/bin/coreos-cloudinit
 RUN export KB8OR_VER=0.6.12 && \
     curl -s -L https://github.com/UKHomeOffice/kb8or/archive/v${KB8OR_VER}.tar.gz | tar -xzf - -C /var/lib && \
