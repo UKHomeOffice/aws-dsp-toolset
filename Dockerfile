@@ -19,15 +19,6 @@ RUN export KB8OR_VER=0.6.12 && \
     gem install bundler && \
     bundle install && \
     ln -s /var/lib/kb8or-${KB8OR_VER}/kb8or.rb /usr/bin/kb8or
-RUN curl -s -L https://releases.hashicorp.com/vault/0.5.2/vault_0.5.2_linux_amd64.zip -o /tmp/vault.zip && \
-    unzip /tmp/vault.zip && \
-    mv vault /usr/bin/vault && \
-    chmod +x /usr/bin/vault && \
-    rm -f /tmp/vault.zip
-
-RUN curl -s -L https://github.com/UKHomeOffice/vaultctl/releases/download/v0.0.6/vaultctl_v0.0.6_linux_x86_64.gz -o /usr/bin/vaultctl.gz && \
-    gunzip /usr/bin/vaultctl.gz && \
-    chmod +x /usr/bin/vaultctl
 
 COPY bin/* /usr/local/bin/
 
@@ -40,5 +31,3 @@ RUN /usr/bin/fleetctl version
 RUN /usr/bin/coreos-cloudinit -version
 RUN /usr/bin/s3secrets --help > /dev/null
 RUN /usr/bin/kb8or --version > /dev/null
-RUN /usr/bin/vault version
-RUN /usr/bin/vaultctl --version
