@@ -10,6 +10,9 @@ secrets_tmp_enc="${secrets_file_enc}rypted"
 secrets_file="stacks/config.d/secrets_${STACKS_ENV}.yaml"
 
 if [[ -f "${secrets_file}" ]]; then
-  s3secrets kms encrypt -k ${kms_master_key_id} "${secrets_file}"
-  cat ${secrets_tmp_enc} | base64 > "${secrets_file_enc}" && rm ${secrets_tmp_enc}
+  aws kms encrypt \
+    --key-id ${kms_master_key_id} \
+    --plaintext fileb://${secrets_file} \
+    --query CiphertextBlob \
+    --output text > ${secrets_file_enc}
 fi
