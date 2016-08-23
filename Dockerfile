@@ -1,7 +1,7 @@
 FROM fedora:23
 
 RUN dnf upgrade -y -q && dnf clean all
-RUN dnf install -y -q procps-ng openssl git jq docker which tar openssh-clients ruby unzip && dnf clean all
+RUN dnf install -y -q procps-ng openssl gettext git jq docker which tar openssh-clients ruby unzip && dnf clean all
 
 RUN pip3 install awscli testinfra
 
