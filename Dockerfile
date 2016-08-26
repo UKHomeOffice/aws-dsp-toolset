@@ -19,6 +19,8 @@ RUN export KB8OR_VER=0.6.12 && \
     gem install bundler && \
     bundle install && \
     ln -s /var/lib/kb8or-${KB8OR_VER}/kb8or.rb /usr/bin/kb8or
+RUN curl -s -L https://github.com/UKHomeOffice/kd/releases/download/v0.0.1/kd_linux_amd64 -o /usr/bin/kd && \
+    chmod +x /usr/bin/kd
 
 COPY bin/* /usr/local/bin/
 
@@ -31,3 +33,4 @@ RUN /usr/bin/fleetctl version
 RUN /usr/bin/coreos-cloudinit -version
 RUN /usr/bin/s3secrets --help > /dev/null
 RUN /usr/bin/kb8or --version > /dev/null
+RUN /usr/bin/kd --version
