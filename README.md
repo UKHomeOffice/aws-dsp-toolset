@@ -1,19 +1,17 @@
-[![Docker Repository on Quay](https://quay.io/repository/ukhomeofficedigital/aws-dsp-toolset/status "Docker Repository on Quay")](https://quay.io/repository/ukhomeofficedigital/aws-dsp-toolset)
-
 # AWS Digital Services Platform Toolset Container
+[![Build Status](https://drone.digital.homeoffice.gov.uk/api/badges/UKHomeOffice/aws-dsp-toolset/status.svg)](https://drone.digital.homeoffice.gov.uk/UKHomeOffice/aws-dsp-toolset)
 
 ### Overview
 This container is responsible for holding the necessary tools for working with AWS to build infrastructure:
-* STACKS
-* AWS CLI
-* CFSSL
-* COREOS CLOUDINIT
-* KB8OR
-* VAULTCTL
-* DOCKER
-* S3SECRETS
-* KUBECTL
-* FLEETCTL
+* stacks
+* aws cli
+* cfssl
+* coreos-cloudinit
+* vaultctl
+* docker
+* s3secrets
+* kubectl
+* fleetctl
 
 This is so we have versioned tools that we can test and validate against CI.
 
@@ -55,4 +53,4 @@ dev:
 
 {{some_secret}} now becomes a variable inside your templates for the development environment
 ```
-This is done when run.sh is initiated, decrypt_secrets will be executed before it runs stacks
+This is done when run.sh is initiated, decrypt_secrets will be executed before it runs stacks.
