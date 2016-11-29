@@ -4,7 +4,7 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
-      - docker build -t toolset .
+      - docker build -t image .
 
   latest_image_to_quay:
     image: docker:1.12
@@ -12,8 +12,8 @@ pipeline:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
       - docker login -u="ukhomeofficedigital+drone_aws_dsp_toolset" -p=${DOCKER_PASSWORD} quay.io
-      - docker tag drone quay.io/ukhomeofficedigital/aws-dsp-toolset:latest
-      - docker tag drone quay.io/ukhomeofficedigital/aws-dsp-toolset:${DRONE_COMMIT_SHA}
+      - docker tag image quay.io/ukhomeofficedigital/aws-dsp-toolset:latest
+      - docker tag image quay.io/ukhomeofficedigital/aws-dsp-toolset:${DRONE_COMMIT_SHA}
       - docker push quay.io/ukhomeofficedigital/aws-dsp-toolset:latest
       - docker push quay.io/ukhomeofficedigital/aws-dsp-toolset:${DRONE_COMMIT_SHA}
     when:
@@ -26,7 +26,7 @@ pipeline:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
       - docker login -u="ukhomeofficedigital+drone_aws_dsp_toolset" -p=${DOCKER_PASSWORD} quay.io
-      - docker tag drone quay.io/ukhomeofficedigital/aws-dsp-toolset:${DRONE_TAG}
+      - docker tag image quay.io/ukhomeofficedigital/aws-dsp-toolset:${DRONE_TAG}
       - docker push quay.io/ukhomeofficedigital/aws-dsp-toolset:${DRONE_TAG}
     when:
       event: tag
