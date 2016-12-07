@@ -2,16 +2,14 @@
 #
 # Assume role is used to assume a role in another account via AWS STS
 #
-
 IDENTITY_FILE="/aws-dsp/scripts/.identity"
 CREDENTIALS_FILE="${HOME}/.aws/credentials"
 DEFAULT_ASSUMED_FILE="/tmp/.assumed_role.json"
 DEFAULT_AWS_PROFILE="${DEFAULT_AWS_PROFILE:-"hod-central"}"
 DEFAULT_CENTRAL_ACCOUNT_ID=$(cd stacks && stacks config aws_central_account_id)
 DEFAULT_ACCOUNT_ID=$(cd stacks && stacks config aws_account_id)
-DEFAULT_ROLE_PREFIX=${DEFAULT_ROLE_PREFIX:-"cross_role"}
-DEFAULT_ROLE="restricted_admin"
-DEFAULT_TTL="3600"
+DEFAULT_ROLE="${DEFAULT_ROLE:-"restricted_admin"}"
+DEFAULT_TTL="${DEFAULT_TTL:-"3600"}"
 
 usage() {
   cat <<EOF
@@ -20,11 +18,11 @@ usage() {
 
   -r|--role         ROLE_NAME      : the role you wish to assume in the remote account (default: ${DEFAULT_ROLE})
   -A|--account      AWS_ID         : the AWS account id for the remote account you are assuming into (default: $DEFAULT_ACCOUNT_ID)
-  -u|--username     USERNAME       : the username in the central account you are known as (no defaults)
+  -u|--username     USERNAME       : the username in the central account you are known as (no default)
   -i|--identity     PATH           : a path to a local cached identity file, used to store the above (default: ${IDENTITY_FILE})
   -t|--ttl          SECONDS        : the time in seconds a token should be granted for (default: ${DEFAULT_TTL})
-  -T|--token        TOKEN          : the TOTP token for the associated mfa in the central
-  -f|--file         PATH           : the file to write the assume role credentials to
+  -T|--token        TOKEN          : the two factor token associated in the central account (default: none)
+  -f|--file         PATH           : the file to write the assume role credentials to (default: none)
     |--central-id   AWS_ID         : the AWS account id for the central account (default: $DEFAULT_CENTRAL_ACCOUNT_ID)
   -h|--help                        : display this usage menu
 EOF
@@ -72,7 +70,7 @@ EOF
   # step: grab the token
   if aws --profile ${DEFAULT_AWS_PROFILE} \
     sts assume-role \
-    --role-arn arn:aws:iam::${ASSUMED_ACCOUNT_ID}:role/${DEFAULT_ROLE_PREFIX}/${ASSUMED_ROLE} \
+    --role-arn arn:aws:iam::${ASSUMED_ACCOUNT_ID}:role/${ASSUMED_ROLE} \
     --role-session-name ${ASSUMED_USERNAME}_${ASSUMED_ROLE} \
     --serial-number arn:aws:iam::${CENTRAL_ID}:mfa/${ASSUMED_USERNAME} \
     --duration-seconds ${ASSUMED_TTL} \
@@ -123,21 +121,17 @@ ASSUMED_ACCOUNT_ID=${ASSUMED_ACCOUNT_ID:-$DEFAULT_ACCOUNT_ID}
 CENTRAL_ID=${CENTRAL_ID:-$DEFAULT_CENTRAL_ACCOUNT_ID}
 ROLES_CREDENTIALS=${ROLES_CREDENTIALS:-$DEFAULT_ROLE_CREDENTIALS_FILE}
 
-## step: source in any identity files
 [[ -f "${IDENTITY_FILE}"      ]] && source "${IDENTITY_FILE}"
-# step: ensure the options
 [[ -z "${ASSUMED_ROLE}"       ]] && usage "you have not specified assumed role"
 [[ -z "${ASSUMED_ACCOUNT_ID}" ]] && usage "you have specified the account id you wish to assume into"
 [[ -z "${ASSUMED_TTL}"        ]] && usage "you have not specified a ttl for the sts"
 [[ -z "${CENTRAL_ID}"         ]] && usage "you have not specified the central account id"
 
-## step: check we have the user email address
 if [[ -z "${ASSUMED_USERNAME}" ]]; then
   echo -n "Please enter your username in the central account: "
   read ASSUMED_USERNAME
   write_identity
 fi
-
 ## step: check if the session has expired
 if ! has_expired; then
   assume_role
