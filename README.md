@@ -17,7 +17,7 @@ This is so we have versioned tools that we can test and validate against CI.
 
 ### Additions
 
-Along side the core tools are additional scripts that enable functionality in a central place.
+Alongside the core tools are additional scripts that enable functionality in a central place.
 
 * peer_vpc
 * encrypt_secrets
