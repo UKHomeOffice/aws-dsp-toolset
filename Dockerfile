@@ -1,4 +1,4 @@
-FROM fedora:25
+FROM fedora:27
 
 RUN dnf upgrade -y -q && dnf clean all
 RUN dnf install -y -q procps-ng openssl gettext git jq docker which tar openssh-clients unzip && dnf clean all
@@ -15,10 +15,10 @@ RUN curl -s https://pkg.cfssl.org/R1.1/cfssl_linux-amd64 -o /usr/bin/cfssl && ch
 
 COPY bin/* /usr/local/bin/
 
-RUN /usr/bin/aws --version \
+RUN /usr/local/bin/aws --version \
   && /usr/bin/docker --version \
   && /usr/bin/cfssl version \
-  && /usr/bin/stacks --version \
+  && /usr/local/bin/stacks --version \
   && /usr/bin/kubectl version --client \
   && /usr/bin/coreos-cloudinit -version \
   && /usr/bin/s3secrets --help > /dev/null \
