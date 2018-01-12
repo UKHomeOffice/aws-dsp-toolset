@@ -8,7 +8,7 @@ DEFAULT_ASSUMED_FILE="/tmp/.assumed_role.json"
 DEFAULT_AWS_PROFILE="${DEFAULT_AWS_PROFILE:-"hod-central"}"
 DEFAULT_CENTRAL_ACCOUNT_ID=$(cd stacks && stacks config aws_central_account_id)
 DEFAULT_ACCOUNT_ID=$(cd stacks && stacks config aws_account_id)
-DEFAULT_ROLE="${DEFAULT_ROLE:-"restricted_admin"}"
+DEFAULT_ROLE="${DEFAULT_ROLE:-"HO-FullAdmin"}"
 DEFAULT_TTL="${DEFAULT_TTL:-"3600"}"
 
 usage() {
